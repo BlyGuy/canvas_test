@@ -1,0 +1,42 @@
+:root {
+    --dark-color: #111;
+    --light-color: #eee;
+}
+
+body {
+    background: var(--light-color);
+    color: var(--dark-color);
+}
+
+a:hover {
+    color: purple;
+}
+
+#spelletje {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--dark-color);
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+    body {
+        background: var(--dark-color);
+        color: var(--light-color);
+    }
+
+    a {
+        color: aquamarine;
+    }
+
+    a:hover {
+        color: coral
+    }
+
+    #spelletje {
+        border-color: var(--light-color);
+    }
+}
