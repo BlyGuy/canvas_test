@@ -9,6 +9,15 @@ body {
     color: var(--dark-color);
 }
 
+main {
+    max-width: 850px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
 a:hover {
     color: purple;
 }
