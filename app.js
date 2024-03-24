@@ -24,9 +24,27 @@ const ball = {
     },
     color: "red",
     radius: 20,
+    mouthOpen: 0,
+    mouthOpenSpeed: 1,
+    mouthIsOpening: true
 };
 
 function updateBall() {
+    //update mouth animation
+    if (ball.mouthIsOpening) {
+        ball.mouthOpen += ball.mouthOpenSpeed * game.frametime;
+        if (ball.mouthOpen >= 1) {
+            ball.mouthIsOpening = false;
+            ball.mouthOpen = 1;
+        }
+    } else {
+        ball.mouthOpen -= ball.mouthOpenSpeed * game.frametime;
+        if (ball.mouthOpen <= 0) {
+            ball.mouthIsOpening = true;
+            ball.mouthOpen = 0;
+        }
+    }
+
     //update movement
     ball.velocity.x += ball.accelleration.x;
     ball.velocity.y += ball.accelleration.y;
@@ -55,8 +73,9 @@ function draw(context) {
     context.fillStyle = "black";
     context.fillRect(0, 0, game.width, game.height);
     //draw ball (pacman)
+    const mouthAngle = Math.PI / 4 * ball.mouthOpen;
     context.beginPath();
-    context.arc(ball.pos.x, ball.pos.y, ball.radius, Math.PI / 6,  Math.PI * 11 / 6);
+    context.arc(ball.pos.x, ball.pos.y, ball.radius, mouthAngle,  2 * Math.PI - mouthAngle);
     context.lineTo(ball.pos.x, ball.pos.y); //close the mouth
     context.fillStyle = ball.color;
     context.fill();
