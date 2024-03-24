@@ -22,12 +22,30 @@ const ball = {
         x: 0,
         y: 0.1 * game.frametime
     },
-    color: "red",
+    color: "yellow",
     radius: 20,
     mouthOpen: 0,
     mouthOpenSpeed: 1,
     mouthIsOpening: true
 };
+
+function updateBallColor(color) {
+    ball.color = color;
+}
+
+function updateBallSpeed(speed) {
+    const newVelocity = speed * game.frametime
+    if (ball.velocity.x > 0) {
+        ball.velocity.x = newVelocity;
+        return;
+    }
+    ball.velocity.x = - newVelocity;
+}
+
+function updateBallBounciness(bounciness) {
+    const newAccelleration = bounciness * game.frametime;
+    ball.accelleration.y = newAccelleration;
+}
 
 function updateBall() {
     //update mouth animation
