@@ -26,7 +26,8 @@ const ball = {
     radius: 20,
     mouthOpen: 0,
     mouthOpenSpeed: 1,
-    mouthIsOpening: true
+    mouthIsOpening: true,
+    facingRight: true
 };
 
 function updateBallColor(color) {
@@ -75,9 +76,11 @@ function updateBall() {
     const ballBottom = ball.pos.y + ball.radius;
     const ballTop = ball.pos.y - ball.radius;
     //horizontal
-    if (ballLeft < 0 || ballRight > game.width) {
+    const hitLeftWall = ballLeft < 0;
+    if (hitLeftWall || ballRight > game.width) {
         ball.velocity.x = -ball.velocity.x;
-        ball.pos.x = ballLeft < 0 ? ball.radius : game.width - ball.radius;
+        ball.facingRight = hitLeftWall;
+        ball.pos.x = hitLeftWall ? ball.radius : game.width - ball.radius;
     }
     //vertical
     if (ballBottom > game.height || ballTop < 0) {
@@ -93,7 +96,10 @@ function draw(context) {
     //draw ball (pacman)
     const mouthAngle = Math.PI / 4 * ball.mouthOpen;
     context.beginPath();
-    context.arc(ball.pos.x, ball.pos.y, ball.radius, mouthAngle,  2 * Math.PI - mouthAngle);
+    if (ball.facingRight)
+        context.arc(ball.pos.x, ball.pos.y, ball.radius, mouthAngle,  2 * Math.PI - mouthAngle);
+    else
+        context.arc(ball.pos.x, ball.pos.y, ball.radius, Math.PI + mouthAngle,  3 * Math.PI - mouthAngle);
     context.lineTo(ball.pos.x, ball.pos.y); //close the mouth
     context.fillStyle = ball.color;
     context.fill();
